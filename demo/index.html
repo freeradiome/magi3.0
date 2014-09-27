@@ -1,0 +1,68 @@
+<!DOCTYPE>
+<html>
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
+    <title>Magi</title>
+    <meta content="initial-scale=1.0, user-scalable=no" name="viewport"/>
+    <script type="text/javascript" src="../src/venders/core.js"></script>
+
+    <script type="text/javascript" src="../src/magi3.js"></script>
+    <script type="text/javascript" src="../src/injector.js"></script>
+    <script type="text/javascript" src="../src/exception.js"></script>
+    <script type="text/javascript" src="../src/getParamsProvider.js"></script>
+</head>
+<body>
+
+
+</body>
+</html>
+<script>
+    var app = new magi("ss");
+    app.provider('yourNameProvider',function(){
+
+        var config = "";
+      this.setCon=function(str){
+          config = str;
+      }
+
+       var ceshi  = "";
+
+        var  e = function(){
+
+        }
+        e.prototype.msg = function(ceshi){
+           console.info(ceshi+config);
+       }
+
+
+        this.setConfig = function(){
+           alert(1);
+        }
+
+        this.$_construct = function () {
+            alert(3);
+           return new e();
+        }
+    });
+
+
+
+
+    app.config(function (  yourNameProvider,     xxx, yourName) {
+
+        yourNameProvider.setCon("--nihaoha---");
+
+    }).run(function(yourName,yourName){
+         (yourName.msg("asdjaskd"));
+    });
+
+//    app.config().run(function(yourName,yourName){
+//        (yourName.msg("asdjaskd"));
+//    });
+
+
+    console.info(app.injector.getProviderList());
+    console.info(app.injector.getInstanceProviderList());
+    console.info(app.injector.getConstructProviderList());
+</script>
+
