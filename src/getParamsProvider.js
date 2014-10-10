@@ -7,7 +7,7 @@
     "use strict";
 
 
-    var getParamsProvider = function () {
+    var $getParamsProvider = function () {
 
         var GetParamsProvider = function () {
 
@@ -15,7 +15,7 @@
 
         };
 
-        GetParamsProvider.prototype.url=function(){
+        GetParamsProvider.prototype.url = function () {
             return location.href;
         };
 
@@ -25,6 +25,6 @@
 
     };
 
-    window.$magi.provider.getParamsProvider = getParamsProvider;
+    window.$magi.provider.$getParamsProvider = $getParamsProvider;
 
 }());

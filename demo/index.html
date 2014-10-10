@@ -8,6 +8,7 @@
 
     <script type="text/javascript" src="../src/magi3.js"></script>
     <script type="text/javascript" src="../src/injector.js"></script>
+    <script type="text/javascript" src="../src/controller.js"></script>
     <script type="text/javascript" src="../src/exception.js"></script>
     <script type="text/javascript" src="../src/getParamsProvider.js"></script>
 </head>
@@ -18,51 +19,100 @@
 </html>
 <script>
     var app = new magi("ss");
-    app.provider('yourNameProvider',function(){
 
-        var config = "";
-      this.setCon=function(str){
-          config = str;
-      }
+    app.provider("memeProvider",function(){
 
-       var ceshi  = "";
 
-        var  e = function(){
+        this.name="uime";
+
+        this.$_construct=function(){
+            return {
+                a:1
+            }
 
         }
-        e.prototype.msg = function(ceshi){
-           console.info(ceshi+config);
-       }
+    })
+    app.provider('yourNameProvider', function (memeProvider) {
+
+        var config = "";
+        this.setCon = function (str) {
+            config = str;
+        }
+
+        var ceshi = "";
+
+        var e = function () {
+
+        }
+        e.prototype.msg = function (ceshi) {
+            console.info(ceshi + config);
+        }
 
 
-        this.setConfig = function(){
-           alert(1);
+        this.setConfig = function (str) {
+            this.ceshi = str;
         }
 
         this.$_construct = function () {
-            alert(3);
-           return new e();
+            console.info("your name provider instance")
+            return new e();
         }
     });
 
 
-
-
-    app.config(function (  yourNameProvider,     xxx, yourName) {
-
+    app
+    .config(function (yourNameProvider) {
         yourNameProvider.setCon("--nihaoha---");
 
-    }).run(function(yourName,yourName){
-         (yourName.msg("asdjaskd"));
+    })
+    .run(function (yourName,meme,yourName,meme) {
+         console.info(meme.a)
+              yourName.msg("call your name provider method msg");
+    });
+    app.controller("aa",function(){
+
     });
 
-//    app.config().run(function(yourName,yourName){
-//        (yourName.msg("asdjaskd"));
-//    });
+    //    app.config().run(function(yourName,yourName){
+    //        (yourName.msg("asdjaskd"));
+    //    });
 
-
+//
     console.info(app.injector.getProviderList());
-    console.info(app.injector.getInstanceProviderList());
-    console.info(app.injector.getConstructProviderList());
+//    console.info(app.injector.getInstanceProviderList());
+//    console.info(app.injector.getConstructProviderList());
+
+
+//    function agent(fun,pa){
+//        var str = "";
+//        S.each(pa,function(i,v){
+//            str=str+"pa["+i+"],";
+//        });
+//        str =str.substr(0,str.length-1);
+//        console.info(str);
+//        return eval( "new fun("+str+")" );
+//    }
+//
+//    var t = function (str,str2) {
+//        this.name = "test";
+//
+//        var u = function(){
+//            this.i = "i";
+//        }
+//        u.prototype.o= function () {
+//            console.info("yes i do"+str+str2);
+//
+//        }
+//        console.info("4")
+//        this.set=function(){
+//            return new u();
+//        }
+//
+//    }
+
+
+//    var s = new t().apply(null,["xxx"])
+//    console.info("s:"+s);
+
 </script>
 
