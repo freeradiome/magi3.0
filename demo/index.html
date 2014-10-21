@@ -18,7 +18,7 @@
 </body>
 </html>
 <script>
-    var app = new magi("ss");
+    var app = magi("ss");
 
     app.provider("memeProvider",function(){
 
@@ -31,8 +31,8 @@
             }
 
         }
-    })
-    app.provider('yourNameProvider', function (memeProvider) {
+    });
+    app.provider('yourNameProvider', function (meme) {
 
         var config = "";
         this.setCon = function (str) {
@@ -77,8 +77,8 @@
     //        (yourName.msg("asdjaskd"));
     //    });
 
-//
-    console.info(app.injector.getProviderList());
+
+//    console.info(app.injector.getProviderList());
 //    console.info(app.injector.getInstanceProviderList());
 //    console.info(app.injector.getConstructProviderList());
 

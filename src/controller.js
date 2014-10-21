@@ -5,14 +5,23 @@
 
     "use strict";
 
-    var $controllerProvider = function () {
+    var $controllerProvider = function ($exception) {
 
-        var injector = undefined;
 
-        this.setProvider = function (provider) {
-            injector = provider;
+        /**
+         * 析构
+         * @returns {Controller}
+         */
+
+        this.$_construct = function () {
+            return new Controller();
         };
 
+
+        /**
+         * 控制器对象
+         * @constructor
+         */
         var Controller = function () {
 
             //可以被注入的provider列表
@@ -28,6 +37,7 @@
          * @returns {Controller}
          */
         Controller.prototype.import = function (name, fun) {
+
             if (typeof name === "object") {
                 var _this = this;
                 $.each(name, function (name, provider) {
@@ -56,9 +66,7 @@
 
         };
 
-        this.$_construct = function () {
-            return new Controller();
-        };
+
 
     }
 

@@ -19,9 +19,6 @@
     //magi系统内部provider服务变量
     window.$magi.provider = {};
 
-    //注入器对象
-    window.$magi.Injector = undefined;
-
 
     /**
      * Magi对象
@@ -35,8 +32,7 @@
 
 
         //注入服务对象
-        this.injector = new $magi.Injector();
-
+        this.injector = new window.$magi.provider["$injectorProvider"]().$_construct();
 
         //系统初始化
         this._initializeConfig();
@@ -52,11 +48,6 @@
 
         //导入系统底层provier
         this.injector.import($magi.provider);
-
-        //配置底层provider
-        //配置控制器
-        this.injector.get("$controllerProvider", true).setProvider(this.injector);
-
 
     };
 
@@ -95,8 +86,7 @@
      * @returns {Magi}
      */
     Magi.prototype.controller = function (name, fun) {
-        var controller = this.injector.get("$controller");
-        controller.import(name, fun);
+        this.injector.get("$controller").import(name, fun);
         return this;
 
     };
@@ -112,7 +102,20 @@
         return this;
     };
 
-    window.magi = Magi;
+    /**
+     * 对象工厂
+     * @param appName
+     * @returns {*}
+     */
+    Magi.prototype.factory = function (appName) {
+        return new Magi(appName);
+    };
+
+
+    window.magi = function (appName) {
+
+        return  Magi.prototype.factory(appName);
+    };
 
 
 }(core, undefined));
