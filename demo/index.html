@@ -1,0 +1,119 @@
+<!DOCTYPE>
+<html>
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
+    <title>Magi</title>
+    <meta content="initial-scale=1.0, user-scalable=no" name="viewport"/>
+    <script type="text/javascript" src="../src/venders/core.js"></script>
+
+    <script type="text/javascript" src="../src/magi3.js"></script>
+    <script type="text/javascript" src="../src/injector.js"></script>
+    <script type="text/javascript" src="../src/controller.js"></script>
+    <script type="text/javascript" src="../src/exception.js"></script>
+    <script type="text/javascript" src="../src/getParams.js"></script>
+    <script type="text/javascript" src="../src/cache.js"></script>
+</head>
+<body>
+
+
+</body>
+</html>
+<script>
+    var app = magi("ss");
+
+    app.provider("memeProvider",function(){
+
+
+        this.name="uime";
+
+        this.$_construct=function(){
+            return {
+                a:1
+            }
+
+        }
+    });
+    app.provider('yourNameProvider', function (meme) {
+
+        var config = "";
+        this.setCon = function (str) {
+            config = str;
+        }
+
+        var ceshi = "";
+
+        var e = function () {
+
+        }
+        e.prototype.msg = function (ceshi) {
+            console.info(ceshi + config);
+        }
+
+
+        this.setConfig = function (str) {
+            this.ceshi = str;
+        }
+
+        this.$_construct = function () {
+            console.info("your name provider instance")
+            return new e();
+        }
+    });
+
+
+    app
+    .config(function (yourNameProvider) {
+        yourNameProvider.setCon("--nihaoha---");
+
+    })
+    .run(function (yourName,meme,yourName,meme) {
+         console.info(meme.a)
+              yourName.msg("call your name provider method msg");
+    });
+    app.controller("aa",function(){
+
+    });
+
+    //    app.config().run(function(yourName,yourName){
+    //        (yourName.msg("asdjaskd"));
+    //    });
+
+
+    console.info(app.injector.getProviderList());
+//    console.info(app.injector.getInstanceProviderList());
+//    console.info(app.injector.getConstructProviderList());
+
+
+//    function agent(fun,pa){
+//        var str = "";
+//        S.each(pa,function(i,v){
+//            str=str+"pa["+i+"],";
+//        });
+//        str =str.substr(0,str.length-1);
+//        console.info(str);
+//        return eval( "new fun("+str+")" );
+//    }
+//
+//    var t = function (str,str2) {
+//        this.name = "test";
+//
+//        var u = function(){
+//            this.i = "i";
+//        }
+//        u.prototype.o= function () {
+//            console.info("yes i do"+str+str2);
+//
+//        }
+//        console.info("4")
+//        this.set=function(){
+//            return new u();
+//        }
+//
+//    }
+
+
+//    var s = new t().apply(null,["xxx"])
+//    console.info("s:"+s);
+
+</script>
+
