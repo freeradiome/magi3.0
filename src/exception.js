@@ -22,6 +22,6 @@
         };
     };
 
-    window.$magi.provider.$exceptionProvider = $exceptionProvider;
+    window.$exceptionProvider = $exceptionProvider;
 
 }());

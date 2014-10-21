@@ -25,6 +25,6 @@
 
     };
 
-    window.$magi.provider.$getParamsProvider = $getParamsProvider;
+    window.$getParamsProvider = $getParamsProvider;
 
 }());

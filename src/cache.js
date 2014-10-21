@@ -134,6 +134,6 @@
 
     };
 
-    window.$magi.provider.$cacheProvider = $cacheProvider;
+    window.$cacheProvider = $cacheProvider;
 
 }());

@@ -4,7 +4,7 @@
  * 同时负责管理被注入的provider
  *
  */
-(function ($, $magi, undefined) {
+(function ($, undefined) {
 
     "use strict";
 
@@ -88,10 +88,10 @@
 
 
         /**
-         * @title 从参数字符串中获取
-         *
-         * @param param
-         * @returns {Array}
+         * 从参数字符串中获取
+         * @param func
+         * @param isNotConstructed
+         * @returns {*}
          */
         Injector.prototype.callback = function (func, isNotConstructed) {
             if (func && typeof func === "function") {
@@ -159,6 +159,6 @@
 
     }
 
-    window.$magi.provider.$injectorProvider = $injectorProvider;
+    window.$injectorProvider = $injectorProvider;
 
-}(core, $magi, undefined));
+}(core, undefined));

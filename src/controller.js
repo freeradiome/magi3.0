@@ -1,7 +1,7 @@
 /**
  * 控制器Provider
  */
-(function ($, $magi, undefined) {
+(function ($, undefined) {
 
     "use strict";
 
@@ -67,9 +67,8 @@
         };
 
 
-
     }
 
-    window.$magi.provider.$controllerProvider = $controllerProvider;
+    window.$controllerProvider = $controllerProvider;
 
-}(core, $magi, undefined));
+}(core, undefined));

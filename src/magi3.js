@@ -9,16 +9,6 @@
 
     "use strict";
 
-    /**
-     * 命名空间列表
-     */
-
-        //magi扩展命名空间
-    window.$magi = {};
-
-    //magi系统内部provider服务变量
-    window.$magi.provider = {};
-
 
     /**
      * Magi对象
@@ -27,35 +17,45 @@
      */
     var Magi = function (appName) {
 
+        //默认被注入的服务
+        this.defaultInjectProvider = {
+            $cacheProvider: $cacheProvider,
+            $controllerProvider: $controllerProvider,
+            $exceptionProvider: $exceptionProvider,
+            $injectorProvider: $injectorProvider,
+            $getParamsProvider: $getParamsProvider
+        };
+
         //应用名称
         this.appName = appName;
 
 
         //注入服务对象
-        this.injector = new window.$magi.provider["$injectorProvider"]().$_construct();
+        this.injector = new $injectorProvider().$_construct();
 
         //系统初始化
-        this._initializeConfig();
+        this._initialize();
 
 
     };
 
     /**
-     *  @title 初始化magi,最先运行和组织默认注入的method
+     *  @title 初始化magi,组织默认注入的method
      * @private initialize
      */
-    Magi.prototype._initializeConfig = function () {
+    Magi.prototype._initialize = function () {
 
-        //导入系统底层provier
-        this.injector.import($magi.provider);
+        //导入默认provider
+        this.injector.import(this.defaultInjectProvider, undefined);
 
     };
+
 
     /**
      * @title 配置provider
      * @desc 实例化注入的provider，并允许设置其属性，
      * @param provider
-     * @returns {magi}
+     * @returns {Magi}
      */
     Magi.prototype.config = function (provider) {
 
@@ -86,6 +86,7 @@
      * @returns {Magi}
      */
     Magi.prototype.controller = function (name, fun) {
+        console.info(this.injector.get("$controller"))
         this.injector.get("$controller").import(name, fun);
         return this;
 
