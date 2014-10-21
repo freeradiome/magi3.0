@@ -250,12 +250,12 @@
          * 对数组应用去重
          * @param array
          */
-        core.unique =function(array){
+        core.unique = function (array) {
             var res = [],
                 json = {},
                 i;
-            for( i = 0; i < array.length; i++){
-                if(!json[array[i]]){
+            for (i = 0; i < array.length; i++) {
+                if (!json[array[i]]) {
                     res.push(array[i]);
                     json[array[i]] = 1;
                 }

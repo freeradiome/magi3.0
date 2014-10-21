@@ -5,57 +5,62 @@
  * });
  *
  */
-(function ($) {
+(function ($, undefined) {
 
     "use strict";
 
-    //magi扩展命名空间
-    window.$magi = {};
 
-    //magi系统内部provider服务
-    window.$magi.provider = {};
-
+    /**
+     * Magi对象
+     * @param appName
+     * @constructor
+     */
     var Magi = function (appName) {
+
+        //默认被注入的服务
+        this.defaultInjectProvider = {
+            $cacheProvider: $cacheProvider,
+            $controllerProvider: $controllerProvider,
+            $exceptionProvider: $exceptionProvider,
+            $injectorProvider: $injectorProvider,
+            $getParamsProvider: $getParamsProvider
+        };
 
         //应用名称
         this.appName = appName;
 
-        //应用中的控制器
-        this.controllerList = [];
 
         //注入服务对象
-        this.injector = new $magi.injector();
+        this.injector = new $injectorProvider().$_construct();
 
         //系统初始化
-        this._initilize();
+        this._initialize();
 
 
     };
 
     /**
-     *  @title 初始化magi,最先运行和组织默认注入的method
-     * @private
+     *  @title 初始化magi,组织默认注入的method
+     * @private initialize
      */
-    Magi.prototype._initilize = function () {
+    Magi.prototype._initialize = function () {
 
-        //导入系统底层provier
-        this.injector.import($magi.provider);
+        //导入默认provider
+        this.injector.import(this.defaultInjectProvider, undefined);
 
     };
+
 
     /**
      * @title 配置provider
      * @desc 实例化注入的provider，并允许设置其属性，
      * @param provider
-     * @returns {magi}
+     * @returns {Magi}
      */
     Magi.prototype.config = function (provider) {
 
         //注入config参数的provider
-        if (provider && typeof provider === "function") {
-            var params = this.injector.getInstanceWithoutConstruct(provider);
-            provider.apply(null, params);
-        }
+        this.injector.callback(provider, true);
         return this;
 
     };
@@ -67,12 +72,26 @@
      * @returns {Magi}
      */
     Magi.prototype.run = function (provider) {
-        if (provider && typeof provider === "function") {
-            var params = this.injector.getInstanceWithConstruct(provider);
-            provider.apply(null, params);
-        }
+
+        this.injector.callback(provider);
+
+
         return this;
     };
+
+
+    /**
+     * 创建一个控制器
+     * @param provider
+     * @returns {Magi}
+     */
+    Magi.prototype.controller = function (name, fun) {
+        console.info(this.injector.get("$controller"))
+        this.injector.get("$controller").import(name, fun);
+        return this;
+
+    };
+
 
     /**
      * 创建一个provider服务
@@ -84,13 +103,20 @@
         return this;
     };
 
-
-    Magi.prototype.controller = function (name, method) {
-        return this;
-
+    /**
+     * 对象工厂
+     * @param appName
+     * @returns {*}
+     */
+    Magi.prototype.factory = function (appName) {
+        return new Magi(appName);
     };
 
-    window.magi = Magi;
+
+    window.magi = function (appName) {
+
+        return  Magi.prototype.factory(appName);
+    };
 
 
-}(core));
+}(core, undefined));

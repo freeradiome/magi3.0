@@ -1,16 +1,27 @@
-(function (core, $magi) {
+/**
+ * 抛出异常的Provider
+ */
+(function () {
 
     "use strict";
 
-    var Exception = function () {
+    var $exceptionProvider = function () {
 
+
+        var Exception = function () {
+
+        };
+
+        Exception.prototype.throw = function (msg) {
+            throw new Error(msg);
+        };
+
+
+        this.$_construct = function () {
+            return new Exception();
+        };
     };
 
-    Exception.prototype.throw = function (msg) {
-        throw new Error(msg);
-    };
+    window.$exceptionProvider = $exceptionProvider;
 
-
-    window.$magi.exception = new Exception();
-
-}(core, $magi));
+}());
