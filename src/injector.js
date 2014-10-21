@@ -4,7 +4,7 @@
  * 同时负责管理被注入的provider
  *
  */
-(function ($, undefined) {
+(function (undefined) {
 
     "use strict";
 
@@ -34,10 +34,12 @@
         Injector.prototype.import = function (name, provider) {
 
             if (typeof name === "object") {
-                var _this = this;
-                $.each(name, function (name, provider) {
-                    _this.providerList[name] = provider;
-                });
+                for (var key in name) {
+                    this.providerList[key] = name[key];
+                }
+//                $.each(name, function (name, provider) {
+//                    _this.providerList[name] = provider;
+//                });
             } else {
                 this.providerList[name] = provider;
             }
@@ -100,9 +102,9 @@
                     _this = this;
 //                 console.info(providerNameList)
                 if (providerNameList && providerNameList.length > 0) {
-                    $.each(providerNameList, function (i, name) {
-                        providers.push(_this.get(name, isNotConstructed));
-                    });
+                    for (var i = 0; i < providerNameList.length; i++) {
+                        providers.push(_this.get(providerNameList[i], isNotConstructed));
+                    }
                 }
                 //        console.info(isConstructed);
                 return this.providerAgent.call(null, func, providers);
@@ -161,4 +163,4 @@
 
     window.$injectorProvider = $injectorProvider;
 
-}(core, undefined));
+}(undefined));
