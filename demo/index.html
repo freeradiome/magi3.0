@@ -15,12 +15,17 @@
     <script type="text/javascript" src="../src/cache.js"></script>
 </head>
 <body>
-
+<input type="button" onclick="sd()" value="to" />
 
 </body>
 </html>
 <script>
     var app = magi("ss");
+    function sd(){
+        $.getScript("../src/cache.js", function(){
+            alert(1)
+        });
+    }
 
     app.provider("memeProvider",function(){
 
@@ -69,7 +74,7 @@
     })
     .run(function (yourName,meme,yourName,meme,$element) {
 
-            $element.$("body").css("background","red");
+
 
               yourName.msg("call your name provider method msg");
     });

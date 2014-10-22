@@ -48,9 +48,12 @@
 
         Injector.prototype.providerAgent = function (fun, pa) {
             var str = "";
-            S.each(pa, function (i, v) {
+//            S.each(pa, function (i, v) {
+//                str = str + "pa[" + i + "],";
+//            });
+            for(var i in pa){
                 str = str + "pa[" + i + "],";
-            });
+            }
             str = str.substr(0, str.length - 1);
             return eval("new fun(" + str + ")");
         };

@@ -38,7 +38,7 @@
             } else if (type === "local") {
                 return window.localStorage;
             } else {
-                $exception.throw("cache type参数无效")
+                $exception.throw("cache type参数无效");
             }
         };
 
@@ -74,7 +74,7 @@
                 if (expires < json.expires || json.expires === 0) {
                     return json.val;
                 } else {
-                    this.remove(key);
+                    this.remove(key, type);
                     return "";
                 }
 
