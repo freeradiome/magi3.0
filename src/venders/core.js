@@ -8,12 +8,13 @@
 
     var core = (function () {
 
+      
         /**
          * 初始化建立对象
          * @param selector
          * @param dom
          * @param isSingle
-         * @returns {e.init}
+         * @returns {init}
          */
         var core = function (selector, dom, isSingle) {
             return new core.fn.init(selector, dom, isSingle);

@@ -19,6 +19,7 @@
 
         //默认被注入的服务
         this.defaultInjectProvider = {
+            $elementProvider: $elementProvider,
             $cacheProvider: $cacheProvider,
             $controllerProvider: $controllerProvider,
             $exceptionProvider: $exceptionProvider,
