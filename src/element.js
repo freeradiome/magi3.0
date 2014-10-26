@@ -24,7 +24,7 @@
         var ElementProvider = function () {
 
             if (type === "jquery") {
-                this.$ = $;
+                this.$ = window.jQuery;
             } else if (type === "coreJs") {
                 this.$ = window.core;
             }
