@@ -17,14 +17,19 @@
      */
     var Magi = function (appName) {
 
-        //默认被注入的服务
+        //默认被注入的Provider
         this.defaultInjectProvider = {
             $elementProvider: $elementProvider,
             $cacheProvider: $cacheProvider,
-            $controllerProvider: $controllerProvider,
             $exceptionProvider: $exceptionProvider,
-            $injectorProvider: $injectorProvider,
-            $getParamsProvider: $getParamsProvider
+            $injectorProvider: $injectorProvider
+        };
+
+        //默认被注入的Service
+        this.defaultInjectService = {
+            $getParams: $getParams,
+            $controller: $controller
+
         };
 
         //应用名称
@@ -47,7 +52,9 @@
     Magi.prototype._initialize = function () {
 
         //导入默认provider
-        this.injector.import(this.defaultInjectProvider, undefined);
+        this.injector.provider(this.defaultInjectProvider);
+        //导入默认provider
+        this.injector.service(this.defaultInjectService);
 
     };
 
@@ -61,7 +68,7 @@
     Magi.prototype.config = function (provider) {
 
         //注入config参数的provider
-        this.injector.callback(provider, true);
+        this.injector.callback(provider);
         return this;
 
     };
@@ -74,7 +81,7 @@
      */
     Magi.prototype.run = function (provider) {
 
-        this.injector.callback(provider);
+        this.injector.callback(provider,true);
 
 
         return this;
@@ -87,8 +94,7 @@
      * @returns {Magi}
      */
     Magi.prototype.controller = function (name, fun) {
-        console.info(this.injector.get("$controller"))
-        this.injector.get("$controller").import(name, fun);
+        this.injector.getService("$controller").import(name, fun);
         return this;
 
     };
@@ -100,7 +106,17 @@
      * @param method
      */
     Magi.prototype.provider = function (name, method) {
-        this.injector.import(name, method);
+        this.injector.provider(name, method);
+        return this;
+    };
+
+    /**
+     * 创建一个provider服务
+     * @param name
+     * @param method
+     */
+    Magi.prototype.service = function (name, method) {
+        this.injector.service(name, method);
         return this;
     };
 

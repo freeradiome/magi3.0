@@ -21,11 +21,7 @@
 </html>
 <script>
     var app = magi("ss");
-    function sd(){
-        $.getScript("../src/cache.js", function(){
-            alert(1)
-        });
-    }
+
 
     app.provider("memeProvider",function(){
 
@@ -39,8 +35,7 @@
 
         }
     });
-    app.provider('yourNameProvider', function (meme) {
-
+    app.provider('yourNameProvider', function (memeProvider) {
         var config = "";
         this.setCon = function (str) {
             config = str;
@@ -52,34 +47,48 @@
 
         }
         e.prototype.msg = function (ceshi) {
-            console.info(ceshi + config);
+            console.info(ceshi + config+ memeProvider.$_construct().a);
         }
 
+        e.prototype.msgd = function () {
+            return ( config+ memeProvider.$_construct().a+"gou");
+        }
 
         this.setConfig = function (str) {
             this.ceshi = str;
         }
 
         this.$_construct = function () {
-            console.info("your name provider instance")
             return new e();
         }
     });
 
+
+    app.service("demi",function(){
+
+        this.name="demia";
+
+    })
+
+    app.service("myS",function(demi,yourName){
+//        console.info(demi)
+//        console.info("123")
+        this.name=demi.name +yourName.msgd();
+    });
 
     app
     .config(function (yourNameProvider) {
         yourNameProvider.setCon("--nihaoha---");
 
     })
-    .run(function (yourName,meme,yourName,meme,$element) {
-
-
+    .run(function (yourName,myS,$getParams) {
+            console.info($getParams.url())
+            console.info(myS.name)
 
               yourName.msg("call your name provider method msg");
     });
     app.controller("aa",function(){
-
+        alert(1)
     });
 
     //    app.config().run(function(yourName,yourName){
@@ -87,9 +96,10 @@
     //    });
 
 
-    console.info(app.injector.getProviderList());
+//    console.info(app.injector.getProviderList());
 //    console.info(app.injector.getInstanceProviderList());
-//    console.info(app.injector.getConstructProviderList());
+//    console.info("=====");
+//    console.info(app.injector.getInstanceServiceList());
 
 
 //    function agent(fun,pa){
