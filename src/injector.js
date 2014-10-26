@@ -15,11 +15,15 @@
             //可以被注入的provider列表
             this.providerList = {};
 
+            //可以被注入的服务列表
+            this.serviceList = {};
+
+
             //可以被注入并完成实例化的provider列表
             this.instanceProviderList = {};
 
             //可以被注入并完成析构的provider列表
-            this.constructProviderList = {};
+            this.instanceServiceList = {};
 
 
             this.providerKeyName = "Provider";
@@ -31,17 +35,42 @@
          * @param name object or string
          * @param provider
          */
-        Injector.prototype.import = function (name, provider) {
+        Injector.prototype.provider = function (name, provider) {
 
             if (typeof name === "object") {
                 for (var key in name) {
-                    this.providerList[key] = name[key];
+                    if (typeof  name[key] === "function") {
+                        this.providerList[key] = name[key];
+                    }
                 }
-//                $.each(name, function (name, provider) {
-//                    _this.providerList[name] = provider;
-//                });
             } else {
-                this.providerList[name] = provider;
+                if (typeof provider === "function") {
+                    this.providerList[name] = provider;
+                }
+
+            }
+
+        };
+
+        /**
+         * @title 添加可以注入的服务
+         * @param name object or string
+         * @param provider
+         */
+        Injector.prototype.service = function (name, service) {
+
+            if (typeof name === "object") {
+                for (var key in name) {
+                    if (typeof  name[key] === "function") {
+                        this.serviceList[key+this.providerKeyName] = name[key];
+                    }
+
+                }
+            } else {
+                if (typeof service === "function") {
+                    this.serviceList[name+this.providerKeyName] = service;
+                }
+
             }
 
         };
@@ -51,7 +80,7 @@
 //            S.each(pa, function (i, v) {
 //                str = str + "pa[" + i + "],";
 //            });
-            for(var i in pa){
+            for (var i in pa) {
                 str = str + "pa[" + i + "],";
             }
             str = str.substr(0, str.length - 1);
@@ -65,28 +94,55 @@
          * @param isConstructed
          * @returns {*}
          */
-        Injector.prototype.get = function (name, isNotConstructed) {
-//        var providerName = name + this.providerKeyName;
-            if (!isNotConstructed) {
-                name = name + this.providerKeyName;
-            }
+//        Injector.prototype.get = function (name, isNotConstructed) {
+//            if (!isNotConstructed) {
+//                name = name + this.providerKeyName;
+//            }
+//            if (this.providerList[name] && typeof this.providerList[name] === "function") {
+//
+//                if (!this.instanceProviderList[name] || typeof this.instanceProviderList[name] !== "object") {
+//                    this.instanceProviderList[name] = this.callback(this.providerList[name], isNotConstructed);
+//                }
+//                if (!isNotConstructed) {
+//                    if (!this.instanceServiceList[name]) {
+//                        this.instanceServiceList[name] = this.instanceProviderList[name].$_construct();
+//                    }
+//                    return this.instanceServiceList[name];
+//                } else {
+//
+//                    return  this.instanceProviderList[name];
+//                }
+//            }
+//
+//        };
+
+        Injector.prototype.getProvider = function (name) {
             if (this.providerList[name] && typeof this.providerList[name] === "function") {
 
                 if (!this.instanceProviderList[name] || typeof this.instanceProviderList[name] !== "object") {
 //                this.instanceProviderList[name] = new this.providerList[name]();
 
 //                    this.instanceProviderList[name] = this.callback(this.providerList[name], isNotConstructed);
-                    this.instanceProviderList[name] = this.callback(this.providerList[name]);
+                    this.instanceProviderList[name] = this.callback(this.providerList[name], false);
                 }
-                if (!isNotConstructed) {
-                    if (!this.constructProviderList[name]) {
-                        this.constructProviderList[name] = this.instanceProviderList[name].$_construct();
-                    }
-                    return this.constructProviderList[name];
-                } else {
+                return  this.instanceProviderList[name];
 
-                    return  this.instanceProviderList[name];
+            }
+
+        };
+
+        Injector.prototype.getService = function (name) {
+            name = name + this.providerKeyName;
+            if (this.providerList[name] && typeof this.providerList[name] === "function") {
+
+                if (!this.instanceProviderList[name] || typeof this.instanceProviderList[name] !== "object") {
+                    this.instanceProviderList[name] = this.callback(this.providerList[name], true);
                 }
+                if (!this.instanceServiceList[name]) {
+                    this.instanceServiceList[name] = this.instanceProviderList[name].$_construct();
+                }
+                return this.instanceServiceList[name];
+
             }
 
         };
@@ -98,18 +154,21 @@
          * @param isNotConstructed
          * @returns {*}
          */
-        Injector.prototype.callback = function (func, isNotConstructed) {
+        Injector.prototype.callback = function (func, constructed) {
             if (func && typeof func === "function") {
                 var providerNameList = this.parseParam(func),
                     providers = [],
                     _this = this;
-//                 console.info(providerNameList)
                 if (providerNameList && providerNameList.length > 0) {
                     for (var i = 0; i < providerNameList.length; i++) {
-                        providers.push(_this.get(providerNameList[i], isNotConstructed));
+                        if (!constructed) {
+                            providers.push(_this.getProvider(providerNameList[i]));
+                        } else {
+                            providers.push(_this.getService(providerNameList[i]));
+                        }
+
                     }
                 }
-                //        console.info(isConstructed);
                 return this.providerAgent.call(null, func, providers);
             } else {
                 return undefined;
@@ -134,8 +193,8 @@
         /**
          * @title 显示已经被注入析构的provider
          */
-        Injector.prototype.getConstructProviderList = function () {
-            return this.constructProviderList;
+        Injector.prototype.getInstanceServiceList = function () {
+            return this.instanceServiceList;
         };
 
         /**

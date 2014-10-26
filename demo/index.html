@@ -21,11 +21,7 @@
 </html>
 <script>
     var app = magi("ss");
-    function sd(){
-        $.getScript("../src/cache.js", function(){
-            alert(1)
-        });
-    }
+
 
     app.provider("memeProvider",function(){
 
@@ -39,8 +35,8 @@
 
         }
     });
-    app.provider('yourNameProvider', function (meme) {
-
+    app.provider('yourNameProvider', function (memeProvider) {
+        console.info(memeProvider);
         var config = "";
         this.setCon = function (str) {
             config = str;
@@ -52,7 +48,7 @@
 
         }
         e.prototype.msg = function (ceshi) {
-            console.info(ceshi + config);
+            console.info(ceshi + config+ memeProvider.$_construct().a);
         }
 
 
@@ -65,14 +61,16 @@
             return new e();
         }
     });
-
+    app.service("myS",function(){
+        alert(212);
+    });
 
     app
     .config(function (yourNameProvider) {
         yourNameProvider.setCon("--nihaoha---");
 
     })
-    .run(function (yourName,meme,yourName,meme,$element) {
+    .run(function (yourName,myS,yourName,meme,$element) {
 
 
 
@@ -87,7 +85,7 @@
     //    });
 
 
-    console.info(app.injector.getProviderList());
+//    console.info(app.injector.getProviderList());
 //    console.info(app.injector.getInstanceProviderList());
 //    console.info(app.injector.getConstructProviderList());
 
