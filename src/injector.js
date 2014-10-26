@@ -136,17 +136,17 @@
         /**
          * 递归的实例Provider或者service fucntion
          * @param func
-         * @param isNotConstructed
+         * @param isService
          * @returns {*}
          */
-        Injector.prototype.callback = function (func, constructed) {
+        Injector.prototype.callback = function (func, isService) {
             if (func && typeof func === "function") {
                 var providerNameList = this.parseParam(func),
                     providers = [],
                     _this = this;
                 if (providerNameList && providerNameList.length > 0) {
                     for (var i = 0; i < providerNameList.length; i++) {
-                        if (!constructed) {
+                        if (!isService) {
                             providers.push(_this.getProvider(providerNameList[i]));
                         } else {
                             providers.push(_this.getService(providerNameList[i]));
