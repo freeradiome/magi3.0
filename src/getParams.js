@@ -1,5 +1,5 @@
 /**
- * get服务
+ * get Service
  *
  */
 (function () {
@@ -7,24 +7,20 @@
     "use strict";
 
 
-    var $getParamsProvider = function () {
+    var GetParams = function () {
 
-        var GetParamsProvider = function () {
 
-            this.history = [];
+        this.history = [];
 
-        };
-
-        GetParamsProvider.prototype.url = function () {
-            return location.href;
-        };
-
-        this.$_construct = function () {
-            return new GetParamsProvider();
-        };
 
     };
 
-    window.$getParamsProvider = $getParamsProvider;
+    GetParams.prototype.history = [];
+
+    GetParams.prototype.url =  function () {
+        return location.href;
+    };
+
+    window.$getParams = GetParams;
 
 }());

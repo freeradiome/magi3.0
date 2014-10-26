@@ -17,14 +17,19 @@
      */
     var Magi = function (appName) {
 
-        //默认被注入的服务
+        //默认被注入的Provider
         this.defaultInjectProvider = {
             $elementProvider: $elementProvider,
             $cacheProvider: $cacheProvider,
-            $controllerProvider: $controllerProvider,
             $exceptionProvider: $exceptionProvider,
-            $injectorProvider: $injectorProvider,
-            $getParamsProvider: $getParamsProvider
+            $injectorProvider: $injectorProvider
+        };
+
+        //默认被注入的Service
+        this.defaultInjectService = {
+            $getParams: $getParams,
+            $controller: $controller
+
         };
 
         //应用名称
@@ -47,7 +52,9 @@
     Magi.prototype._initialize = function () {
 
         //导入默认provider
-        this.injector.provider(this.defaultInjectProvider, undefined);
+        this.injector.provider(this.defaultInjectProvider);
+        //导入默认provider
+        this.injector.service(this.defaultInjectService);
 
     };
 

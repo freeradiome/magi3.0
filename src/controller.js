@@ -1,21 +1,9 @@
 /**
- * 控制器Provider
+ * 控制器Service
  */
 (function ($, undefined) {
 
     "use strict";
-
-    var $controllerProvider = function ($exception) {
-
-
-        /**
-         * 析构
-         * @returns {Controller}
-         */
-
-        this.$_construct = function () {
-            return new Controller();
-        };
 
 
         /**
@@ -67,8 +55,7 @@
         };
 
 
-    }
 
-    window.$controllerProvider = $controllerProvider;
+    window.$controller = Controller;
 
 }(core, undefined));

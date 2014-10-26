@@ -81,14 +81,14 @@
         yourNameProvider.setCon("--nihaoha---");
 
     })
-    .run(function (yourName,myS) {
-
+    .run(function (yourName,myS,$getParams) {
+            console.info($getParams.url())
             console.info(myS.name)
 
               yourName.msg("call your name provider method msg");
     });
     app.controller("aa",function(){
-
+        alert(1)
     });
 
     //    app.config().run(function(yourName,yourName){

@@ -18,15 +18,14 @@
             //可以被注入的服务列表
             this.serviceList = {};
 
-
-            //可以被注入并完成实例化的provider列表,但instanceProviderList中的服务执行$_constrcut后将变为instanceServiceList中的对象
+            //可以被注入并完成实例化的provider列表,当instanceProviderList中的服务执行$_constrcut后将变为instanceServiceList中的对象
             this.instanceProviderList = {};
 
             //可以被注入并完成析构的provider列表
             this.instanceServiceList = {};
 
-
             this.providerKeyName = "Provider";
+
         };
 
 
@@ -74,6 +73,7 @@
             }
 
         };
+
 
         Injector.prototype.providerAgent = function (fun, pa) {
             var str = "";
