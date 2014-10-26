@@ -36,7 +36,6 @@
         }
     });
     app.provider('yourNameProvider', function (memeProvider) {
-        console.info(memeProvider);
         var config = "";
         this.setCon = function (str) {
             config = str;
@@ -51,18 +50,30 @@
             console.info(ceshi + config+ memeProvider.$_construct().a);
         }
 
+        e.prototype.msgd = function () {
+            return ( config+ memeProvider.$_construct().a+"gou");
+        }
 
         this.setConfig = function (str) {
             this.ceshi = str;
         }
 
         this.$_construct = function () {
-            console.info("your name provider instance")
             return new e();
         }
     });
-    app.service("myS",function(){
-        alert(212);
+
+
+    app.service("demi",function(){
+
+        this.name="demia";
+
+    })
+
+    app.service("myS",function(demi,yourName){
+//        console.info(demi)
+//        console.info("123")
+        this.name=demi.name +yourName.msgd();
     });
 
     app
@@ -70,9 +81,9 @@
         yourNameProvider.setCon("--nihaoha---");
 
     })
-    .run(function (yourName,myS,yourName,meme,$element) {
+    .run(function (yourName,myS) {
 
-
+            console.info(myS.name)
 
               yourName.msg("call your name provider method msg");
     });
@@ -87,7 +98,8 @@
 
 //    console.info(app.injector.getProviderList());
 //    console.info(app.injector.getInstanceProviderList());
-//    console.info(app.injector.getConstructProviderList());
+//    console.info("=====");
+//    console.info(app.injector.getInstanceServiceList());
 
 
 //    function agent(fun,pa){
