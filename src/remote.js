@@ -68,10 +68,7 @@
 
         /**
          * 获取请求
-         * @param url
-         * @param requestData
-         * @param params {type:post,expires:3600,format:string/json,sync:ture,callback:function,url:xxx,request:data}
-         * @param callback
+         * @param params
          */
         RemoteProvider.prototype.load = function (params) {
             if (typeof params === "function") {

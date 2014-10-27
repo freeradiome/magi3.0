@@ -17,7 +17,7 @@
 
     GetParams.prototype.history = [];
 
-    GetParams.prototype.url =  function () {
+    GetParams.prototype.url = function () {
         return location.href;
     };
 

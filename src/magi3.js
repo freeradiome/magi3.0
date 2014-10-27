@@ -5,7 +5,7 @@
  * });
  *
  */
-(function ($, undefined) {
+(function (undefined) {
 
     "use strict";
 
@@ -53,7 +53,7 @@
 
         //导入默认provider
         this.injector.provider(this.defaultInjectProvider);
-        //导入默认provider
+        //导入默认service
         this.injector.service(this.defaultInjectService);
 
     };
@@ -81,7 +81,7 @@
      */
     Magi.prototype.run = function (provider) {
 
-        this.injector.callback(provider,true);
+        this.injector.callback(provider, true);
 
 
         return this;
@@ -136,4 +136,4 @@
     };
 
 
-}(core, undefined));
+}(undefined));
