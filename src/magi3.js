@@ -79,11 +79,18 @@
      * @param provider
      * @returns {Magi}
      */
-    Magi.prototype.run = function (provider) {
+    Magi.prototype.run = function (service) {
 
-        this.injector.callback(provider, true);
+        //自定义控制器
+//        this.injector.getService("$controller").beforeRun(service);
+
+        console.info( this.injector);
+        //执行控制器
+        this.injector.getService("$controller").run(service);
 
 
+        //开始执行注入的服务方法
+//        this.injector.callback(service, true);
         return this;
     };
 
@@ -94,7 +101,10 @@
      * @returns {Magi}
      */
     Magi.prototype.controller = function (name, fun) {
+
         this.injector.getService("$controller").import(name, fun);
+
+
         return this;
 
     };

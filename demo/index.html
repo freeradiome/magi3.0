@@ -15,7 +15,6 @@
     <script type="text/javascript" src="../src/cache.js"></script>
 </head>
 <body>
-<input type="button" onclick="sd()" value="to" />
 
 </body>
 </html>
@@ -82,10 +81,12 @@
 
     })
     .run(function (yourName,myS,$getParams) {
-            console.info($getParams.url())
-            console.info(myS.name)
+                console.info($getParams);
+//            console.info($getParams.url())
+//            console.info(myS.name)
 
-              yourName.msg("call your name provider method msg");
+
+//              yourName.msg("call your name provider method msg");
     });
     app.controller("aa",function(){
         alert(1)

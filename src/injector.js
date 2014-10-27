@@ -57,21 +57,17 @@
          * @param provider
          */
         Injector.prototype.service = function (name, service) {
-
             if (typeof name === "object") {
                 for (var key in name) {
                     if (typeof  name[key] === "function") {
                         this.serviceList[key + this.providerKeyName] = name[key];
                     }
-
                 }
             } else {
                 if (typeof service === "function") {
                     this.serviceList[name + this.providerKeyName] = service;
                 }
-
             }
-
         };
 
 
@@ -113,7 +109,6 @@
         Injector.prototype.getService = function (name) {
             name = name + this.providerKeyName;
             if (this.providerList[name] && typeof this.providerList[name] === "function") {
-
                 if (!this.instanceProviderList[name] || typeof this.instanceProviderList[name] !== "object") {
                     this.instanceProviderList[name] = this.callback(this.providerList[name], true);
                 }
@@ -123,9 +118,10 @@
                 return this.instanceServiceList[name];
 
             } else if (this.serviceList[name] && typeof this.serviceList[name] === "function") {
-
                 if (!this.serviceList[name] || typeof this.serviceList[name] !== "object") {
-                    this.instanceServiceList[name] = this.callback(this.serviceList[name], true);
+                    if (!this.instanceServiceList[name]) {
+                        this.instanceServiceList[name] = this.callback(this.serviceList[name], true);
+                    }
                 }
                 return this.instanceServiceList[name];
             }
@@ -214,7 +210,7 @@
             return new Injector();
         };
 
-    }
+    };
 
     window.$injectorProvider = $injectorProvider;
 
