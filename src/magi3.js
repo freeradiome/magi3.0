@@ -10,6 +10,7 @@
     "use strict";
 
 
+
     /**
      * Magi对象
      * @param appName
@@ -21,8 +22,7 @@
         this.defaultInjectProvider = {
             $elementProvider: $elementProvider,
             $cacheProvider: $cacheProvider,
-            $exceptionProvider: $exceptionProvider,
-            $injectorProvider: $injectorProvider
+            $exceptionProvider: $exceptionProvider
         };
 
         //默认被注入的Service
@@ -36,7 +36,7 @@
         this.appName = appName;
 
 
-        //注入服务对象
+        //injector注入服务对象
         this.injector = new $injectorProvider().$_construct();
 
         //系统初始化
@@ -51,10 +51,13 @@
      */
     Magi.prototype._initialize = function () {
 
+
         //导入默认provider
         this.injector.provider(this.defaultInjectProvider);
+
         //导入默认service
         this.injector.service(this.defaultInjectService);
+
 
     };
 
@@ -81,17 +84,15 @@
      */
     Magi.prototype.run = function (service) {
 
-        //自定义控制器
-//        this.injector.getService("$controller").beforeRun(service);
+        //自定义控制器析构方法
+        this.injector.getService("$controller").beforeRun(service);
 
-        console.info( this.injector);
         //执行控制器
         this.injector.getService("$controller").run(service);
 
 
-        //开始执行注入的服务方法
-//        this.injector.callback(service, true);
         return this;
+
     };
 
 

@@ -72,11 +72,8 @@
 
 
         Injector.prototype.providerAgent = function (fun, pa) {
-            var str = "";
-//            S.each(pa, function (i, v) {
-//                str = str + "pa[" + i + "],";
-//            });
-            for (var i in pa) {
+            var str = "",i;
+            for ( i in pa) {
                 str = str + "pa[" + i + "],";
             }
             str = str.substr(0, str.length - 1);
@@ -139,13 +136,13 @@
             if (func && typeof func === "function") {
                 var providerNameList = this.parseParam(func),
                     providers = [],
-                    _this = this;
+                    i;
                 if (providerNameList && providerNameList.length > 0) {
-                    for (var i = 0; i < providerNameList.length; i++) {
+                    for ( i = 0; i < providerNameList.length; i++) {
                         if (!isService) {
-                            providers.push(_this.getProvider(providerNameList[i]));
+                            providers.push(this.getProvider(providerNameList[i]));
                         } else {
-                            providers.push(_this.getService(providerNameList[i]));
+                            providers.push(this.getService(providerNameList[i]));
                         }
 
                     }
@@ -206,8 +203,17 @@
             }
         };
 
+        /**
+         * 特殊形式的自我实例化和自我注入
+         * @returns {*}
+         */
         this.$_construct = function () {
-            return new Injector();
+            var injectorInstance = new Injector(),
+                providerName = "$injector" + injectorInstance.providerKeyName;
+            injectorInstance.providerList[providerName] = $injectorProvider;
+            injectorInstance.instanceProviderList[providerName] = new $injectorProvider();
+            injectorInstance.instanceServiceList[providerName] = injectorInstance;
+            return  injectorInstance.instanceServiceList[providerName];
         };
 
     };

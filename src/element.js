@@ -9,7 +9,8 @@
 
     var $elementProvider = function () {
 
-        var type = "jquery";
+        var type = "jquery",
+            ElementProvider;
 
         this.config = function (params) {
             if (params.type) {
@@ -21,7 +22,7 @@
          * 实例化Dom操作对象
          * @constructor
          */
-        var ElementProvider = function () {
+        ElementProvider = function () {
 
             if (type === "jquery") {
                 this.$ = window.jQuery;

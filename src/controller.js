@@ -27,12 +27,11 @@
     /**
      * 运行一个控制器
      */
-    Controller.prototype.run = function (service) {
-        console.info( this.injector);
-        this.injector.callback(service, true);
-//        if (this._beforeRun) {
-//            this.injector.callback(this._beforeRun, true);
-//        }
+    Controller.prototype.run = function () {
+
+        if (this._beforeRun) {
+            this.injector.callback(this._beforeRun, true);
+        }
         return this;
 
     };
