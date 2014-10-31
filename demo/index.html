@@ -13,6 +13,8 @@
     <script type="text/javascript" src="../src/exception.js"></script>
     <script type="text/javascript" src="../src/getParams.js"></script>
     <script type="text/javascript" src="../src/cache.js"></script>
+
+    <script type="text/javascript" src="../src/runtime.js"></script>
 </head>
 <body>
 
@@ -78,7 +80,13 @@
         yourNameProvider.setCon("--nihaoha---");
 
     })
-    .run(function (yourName,myS,$getParams) {
+    .run(function (yourName,myS,$getParams,$runtime) {
+
+            $runtime.start();
+                setTimeout(function(){
+                    $runtime.log("test");
+                },2000)
+
             console.info($getParams.url())
             console.info(myS.name)
 

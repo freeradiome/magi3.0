@@ -28,7 +28,8 @@
         //默认被注入的Service
         this.defaultInjectService = {
             $getParams: $getParams,
-            $controller: $controller
+            $controller: $controller,
+            $runtime: $runtime
 
         };
 
