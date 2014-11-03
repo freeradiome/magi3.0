@@ -85,6 +85,16 @@
      */
     Magi.prototype.run = function (service) {
 
+
+        //首次启动时候构建场景scene
+
+
+        //获取路由信息route 用于配置同时提供路由的方法 route.url定向
+        //route Provider.config
+
+
+
+
         //自定义控制器析构方法
         this.injector.getService("$controller").beforeRun(service);
 
